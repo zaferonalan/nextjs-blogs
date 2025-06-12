@@ -1,0 +1,62 @@
+"use client"
+import React, { FC } from 'react'
+import { Input } from '../ui/input'
+import { Textarea } from '../ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Button } from '../ui/button'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormInputPost } from '@/types'
+import { postSchema } from '@/zodSchema/schema'
+
+interface FormPostProps{
+    submit: SubmitHandler<FormInputPost>
+}
+
+const Formpost: FC<FormPostProps> = ({submit}) => {
+    const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tag: ""}})
+
+    
+  return (
+    <form onSubmit={handleSubmit(submit)} className='flex flex-col items-center justify-center gap-5 mt-10'>
+        <div className='w-full max-w-lg'>
+            <Input {...register("title")} type='text' placeholder='Post title...' />
+            { errors.title &&  <p className='text-red-500 text-sm mt-1'>{errors.title.message}</p>}
+        </div>
+
+        <div className='w-full max-w-lg'>
+            <Textarea {...register("content")} placeholder='Post content...'/>
+            { errors.content && <p className='text-red-500 text-sm mt-1'>{errors.content.message}</p> }
+        </div>
+        <div className='max-w-lg w-full'>
+            <Controller control={control} name='tag' render={({field}) => (
+                <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className='max-w-lg w-full'>
+                        <SelectValue placeholder="Select Tags" />
+                    </SelectTrigger>
+                    <SelectContent className='w-full'>
+                        <SelectGroup>
+                            <SelectItem value="javascript">Javascript</SelectItem>
+                            <SelectItem value="python">Python</SelectItem>
+                            <SelectItem value="php">Php</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            )}>
+            </Controller>
+            { errors.tag && <p className='text-red-500 text-sm mt-1'>{errors.tag.message}</p> }
+        </div>
+        
+        <Button type='submit' className='bg-blue-600 max-w-lg w-full'>CREATE</Button>
+    </form>
+  )
+}
+
+export default Formpost
