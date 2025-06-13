@@ -1,9 +1,11 @@
 import ButtonAction from '@/components/DetailButton/ButtonAction'
+import Backbutton from '@/components/BackButton/Backbutton'
 import React from 'react'
 
 const BlogDetailPage = () => {
   return (
     <div className='container mx-auto px-4 py-4'>
+        <Backbutton/>
         <div className='mb-8'>
             <h2 className='text-2xl font-bold my-4'>Post One</h2>
             <ButtonAction/>

@@ -18,9 +18,10 @@ import { postSchema } from '@/zodSchema/schema'
 
 interface FormPostProps{
     submit: SubmitHandler<FormInputPost>
+    isEditing: boolean
 }
 
-const Formpost: FC<FormPostProps> = ({submit}) => {
+const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
     const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tag: ""}})
 
     
@@ -54,7 +55,9 @@ const Formpost: FC<FormPostProps> = ({submit}) => {
             { errors.tag && <p className='text-red-500 text-sm mt-1'>{errors.tag.message}</p> }
         </div>
         
-        <Button type='submit' className='bg-blue-600 max-w-lg w-full'>CREATE</Button>
+        <Button type='submit' className='bg-blue-600 hover:bg-blue-500 max-w-lg w-full'>
+            {isEditing ? "UPDATE" :"CREATE"}
+        </Button>
     </form>
   )
 }

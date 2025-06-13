@@ -10,7 +10,7 @@ const Postcomp = () => {
     }
   return (
     <div>
-        <Formpost submit={handleCreatePost}/>
+        <Formpost submit={handleCreatePost} isEditing={false}/>
     </div>
   )
 }
