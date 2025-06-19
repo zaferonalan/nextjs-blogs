@@ -19,6 +19,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from "axios"
 import { Tag } from '@/generated/prisma'
 import { Loader2 } from 'lucide-react'
+import { fetchTags } from '@/lib/api/tags'
 
 interface FormPostProps{
     submit: SubmitHandler<FormInputPost>
@@ -28,12 +29,17 @@ interface FormPostProps{
 const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
     const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tag: ""}})
 
+    // const { data: dataTags, isLoading: isLoadingTags  } = useQuery<Tag[]>({
+    //     queryKey: ["tags"],
+    //     queryFn: async () => {
+    //         const res = await axios.get("/api/tags")
+    //         return res.data
+    //     }
+    // })
+
     const { data: dataTags, isLoading: isLoadingTags  } = useQuery<Tag[]>({
         queryKey: ["tags"],
-        queryFn: async () => {
-            const res = await axios.get("/api/tags")
-            return res.data
-        }
+        queryFn: fetchTags
     })
 
     console.log(dataTags);
