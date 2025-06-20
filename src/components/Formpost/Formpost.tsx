@@ -16,7 +16,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FormInputPost } from '@/types'
 import { postSchema } from '@/zodSchema/schema'
 import { useQuery } from '@tanstack/react-query'
-import axios from "axios"
 import { Tag } from '@/generated/prisma'
 import { Loader2 } from 'lucide-react'
 import { fetchTags } from '@/lib/api/tags'
@@ -27,7 +26,7 @@ interface FormPostProps{
 }
 
 const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
-    const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tag: ""}})
+    const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tagId: ""}})
 
     // const { data: dataTags, isLoading: isLoadingTags  } = useQuery<Tag[]>({
     //     queryKey: ["tags"],
@@ -58,7 +57,7 @@ const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
         {
             (isLoadingTags ? (<Loader2 className='animate-spin'/>  ):(
                 <div className='max-w-lg w-full'>
-                    <Controller control={control} name='tag' render={({field}) => (
+                    <Controller control={control} name='tagId' render={({field}) => (
                         <Select onValueChange={field.onChange} value={field.value}>
                             <SelectTrigger className='max-w-lg w-full'>
                                 <SelectValue placeholder="Select Tags" />
@@ -73,7 +72,7 @@ const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
                         </Select>
                     )}>
                     </Controller>
-                    { errors.tag && <p className='text-red-500 text-sm mt-1'>{errors.tag.message}</p> }
+                    { errors.tagId && <p className='text-red-500 text-sm mt-1'>{errors.tagId.message}</p> }
                 </div>
             ))
         }
