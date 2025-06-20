@@ -24,7 +24,7 @@ interface PostCardProps {
   }
 }
 const CardModel:FC<PostCardProps> = ({post}) => {
-  const { content, Tag, title } = post
+  const { id, content, Tag, title } = post
 
   return (
     <Card className="w-full">
@@ -37,7 +37,7 @@ const CardModel:FC<PostCardProps> = ({post}) => {
         <CardFooter>
             <CardAction>
               <Badge>{Tag.name}</Badge>
-              <Link href="/blog/1" className="hover:underline">Read more...</Link>
+              <Link href={`/blog/${id}`} className="hover:underline ml-2">Read more...</Link>
             </CardAction>
         </CardFooter>
     </Card>
