@@ -22,6 +22,7 @@ const Postcomp = () => {
       },
       onSuccess: () => {
         router.push("/")
+        router.refresh()
       }
     })
   return (
