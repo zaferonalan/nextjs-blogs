@@ -13,7 +13,7 @@ const Postcomp = () => {
       createPost(data)
     }
 
-    const { mutate: createPost } = useMutation({
+    const { mutate: createPost, isPending: isLoadingSubmit } = useMutation({
       mutationFn: (newPost: FormInputPost) => {
         return axios.post('/api/post/create', newPost)
       },
@@ -27,7 +27,7 @@ const Postcomp = () => {
     })
   return (
     <div>
-        <Formpost submit={handleCreatePost} isEditing={false}/>
+        <Formpost submit={handleCreatePost} isEditing={false} isLoadingSubmit={isLoadingSubmit}/>
     </div>
   )
 }

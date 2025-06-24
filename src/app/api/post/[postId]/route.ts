@@ -42,3 +42,22 @@ export async function PATCH(req: Request, context:ContextProps) {
         return NextResponse.json({ message: "Could not update post"}, { status: 500 })
     }
 }
+
+
+export async function GET(req: Request, context: ContextProps) {
+    try {
+        const { params } = context
+        const post = await prisma.post.findFirst({
+            where: {
+                id: params.postId
+            },
+            include: {
+                Tag: true
+            }
+        })
+
+        return NextResponse.json(post, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({message: "could not fetch post"}, {status: 500})
+    }
+}

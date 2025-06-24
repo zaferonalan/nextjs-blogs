@@ -1,4 +1,5 @@
 "use client"
+
 import React, { FC } from 'react'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
@@ -22,11 +23,13 @@ import { fetchTags } from '@/lib/api/tags'
 
 interface FormPostProps{
     submit: SubmitHandler<FormInputPost>
-    isEditing: boolean
+    isEditing: boolean,
+    initialValue?: FormInputPost
+    isLoadingSubmit: boolean
 }
 
-const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
-    const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues:{title: "", content: "", tagId: ""}})
+const Formpost: FC<FormPostProps> = ({submit, isEditing, initialValue, isLoadingSubmit}) => {
+    const {register, handleSubmit, control, formState:{errors}} = useForm<FormInputPost>({resolver: zodResolver(postSchema), defaultValues: initialValue})
 
     // const { data: dataTags, isLoading: isLoadingTags  } = useQuery<Tag[]>({
     //     queryKey: ["tags"],
@@ -78,7 +81,8 @@ const Formpost: FC<FormPostProps> = ({submit, isEditing}) => {
         }
 
         <Button type='submit' className='bg-blue-600 hover:bg-blue-500 max-w-lg w-full'>
-            {isEditing ? "UPDATE" :"CREATE"}
+            {isLoadingSubmit && <span className='animate-spin'><Loader2/></span>}
+            {isEditing ? (isLoadingSubmit ? "Updating..." : "Update" ) : (isLoadingSubmit ? "Creating..." : "Create")}
         </Button>
     </form>
   )

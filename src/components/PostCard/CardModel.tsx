@@ -32,7 +32,7 @@ const CardModel:FC<PostCardProps> = ({post}) => {
           <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent>
-            <p>{content}</p>
+            <p>{content.slice(0, 30)}</p>
         </CardContent>
         <CardFooter>
             <CardAction>

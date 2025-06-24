@@ -32,7 +32,7 @@ const ButtonAction:FC<ButtonActionProps> = ({id}) => {
   return (
     <div>
         <Button asChild>
-          <Link href="/edit/id" className='mr-2'>
+          <Link href={`/edit/${id}`} className='mr-2'>
               <Pencil/>Edit
           </Link>
         </Button>
